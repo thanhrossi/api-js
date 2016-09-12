@@ -3,7 +3,8 @@ var express  = require("express"),
 	morgan = require("morgan"),
 	bookRoute = require("./route/book"),
 	bodyParser = require('body-parser')
-	errors = require("./errors");
+	errors = require("./errors"),
+	mongoose = require("mongoose");
 
 app.use(morgan("dev"));
 
