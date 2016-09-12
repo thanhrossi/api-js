@@ -2,7 +2,8 @@ var express  = require("express"),
 	app = express(),
 	morgan = require("morgan"),
 	bookRoute = require("./route/book"),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser')
+	errors = require("./errors");
 
 app.use(morgan("dev"));
 
@@ -17,4 +18,7 @@ app.get("/", function (req, res) {
 });
 
 app.use("/api", bookRoute);
+app.use("*", function(req, res){
+	res.status(404).json(errors.routeNotExists);
+});
 app.listen(3000);
