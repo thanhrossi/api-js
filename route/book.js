@@ -10,5 +10,7 @@ router.route("/books")
 	.put(bookController.updateMultiBooks);
 
 router.route("/books/:id")
-	.get(bookController.getBook);
+	.get(bookController.getBook)
+	.put(bookController.updateBook)
+	.delete(bookController.deleteBook);
 module.exports = router;

@@ -4,7 +4,15 @@ var express  = require("express"),
 	bookRoute = require("./route/book"),
 	bodyParser = require('body-parser')
 	errors = require("./errors"),
-	mongoose = require("mongoose");
+	mongoose = require("mongoose"),
+	connString = "mongodb://localhost:27017/demoApi";
+
+mongoose.connect(connString);
+global.Book = require("./model/book");
+
+mongoose.connection.on("connected", function(){
+	console.log("connected mongodb");
+});
 
 app.use(morgan("dev"));
 
