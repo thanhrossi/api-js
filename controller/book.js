@@ -43,8 +43,7 @@ exports.deleteMultiBooks = function (req,res) {
 
 exports.updateMultiBooks = function (req,res) {
 	var arrayID = req.body.ids.split(" "),
-		sentinel = 0,
-		i=0;
+		sentinel = 0;
 
 	arrayID.forEach(function(id){
 		Book.findOne({ID: id}, function(err, data) {
@@ -54,15 +53,12 @@ exports.updateMultiBooks = function (req,res) {
 			    data.Title =  req.body.Title || data.Title,
 			    data.SubTitle = req.body.SubTitle || data.SubTitle,
 			    data.Description = req.body.Description || data.Description,
-			    data.Image = req.body.Image || data.Image,
-			    data.isbn = req.body.isbn || data.isbn
+			    data.Image = req.body.Image || data.Image
 
-			    if(++sentinel === arrayID.length) {
-			    	data.save(function(err){
-					if(err) return res.json(err);
-						res.status(202).json();
-					});
-			    }
+		    	data.save(function(err){
+				if(err) return res.json(err);
+					res.status(202).json();
+				});
 				
 			}
 		});
