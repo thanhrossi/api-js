@@ -102,11 +102,19 @@ exports.deleteBook = function (req,res) {
 };
 
 exports.getBook = function (req,res) {
-	Book.findOne({ID: req.params.id}, function(err, data) {
-		if(err) {
-			res.json(err);
-		}else{
-			res.json(data);
-		}
-	});
+	var fields, queryString = "";
+	if(req.query.fields) {
+		fields = req.query.fields.split(",");
+		queryString = fields.join(" ");
+	}
+	
+	Book.findOne({ID: req.params.id})
+		.select(queryString)
+		.exec(function(err, data) {
+			if(err) {
+				res.json(err);
+			}else{
+				res.json(data);
+			}
+		});
 };

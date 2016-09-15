@@ -1,5 +1,6 @@
 "use strict";
 var mongoose = require("mongoose"),
+	reviewSchema = require("./review"),
 	bookSchema = new mongoose.Schema({
 		ID: Number,
 	    Title: String,
@@ -10,6 +11,11 @@ var mongoose = require("mongoose"),
 	    	type: String,
 	    	require: true,
 	    	unique: true
+	    },
+	    reviews : [reviewSchema],
+	    ratingAvg: {
+	    	type: Number,
+	    	default: 0
 	    }
 	});
 

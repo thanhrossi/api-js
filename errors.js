@@ -10,5 +10,10 @@ module.exports = {
 		code: 2,
 		message: "Router not exist",
 		description: "DES - Router not exist"
+	},
+	"reviewNotExists": {
+		code: 3,
+		message: "review not exist",
+		description: "DES - review not exist"
 	}
 };

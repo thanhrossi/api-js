@@ -5,6 +5,7 @@ var express  = require("express"),
 	bodyParser = require('body-parser')
 	errors = require("./errors"),
 	mongoose = require("mongoose"),
+	mongoose.Promise = global.Promise,
 	connString = "mongodb://localhost:27017/demoApi";
 
 mongoose.connect(connString);
