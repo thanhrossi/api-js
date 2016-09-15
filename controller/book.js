@@ -107,13 +107,33 @@ exports.getBook = function (req,res) {
 		fields = req.query.fields.split(",");
 		queryString = fields.join(" ");
 	}
-	
+
 	Book.findOne({ID: req.params.id})
 		.select(queryString)
 		.exec(function(err, data) {
 			if(err) {
 				res.json(err);
 			}else{
+				var reviews = data.reviews;
+				
+				if(reviews) {
+					var sum = 0, arrLeng = reviews.length, avgVal;
+
+					reviews.forEach(function(rv) {
+						sum += rv.rating;
+					});
+
+					avgVal = Math.round(sum/arrLeng);
+					data.ratingAvg = avgVal;
+
+					data.save(function(err,book) {
+						if(err) res.json(err);
+						res.status(200).json();
+					});
+					
+				}else{
+					res.status(404).json(errors.reviewNotExists);
+				}
 				res.json(data);
 			}
 		});
