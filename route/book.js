@@ -2,7 +2,12 @@
 var express = require("express"),
 	router = express.Router(),
 	bookController = require("../controller/book"),
-	reviewController = require("../controller/review");
+	reviewController = require("../controller/review"),
+	config = require("../config"),
+	jwt = require("express-jwt"),
+	authenticate = jwt({
+		secret: config.secretKey
+	});
 
 router.route("/books")
 	.get(bookController.getListBooks)
@@ -17,11 +22,11 @@ router.route("/books/:id")
 
 router.route("/books/:bookId/reviews")
 	.get(reviewController.getListReviews)
-	.post(reviewController.createNewReview);
+	.post(authenticate, reviewController.createNewReview);
 
 router.route("/books/:bookId/reviews/:reviewId")
 	.get(reviewController.getReview)
 	.put(reviewController.updateReview)
-	.delete(reviewController.deleteReview);
+	.delete(authenticate, reviewController.deleteReview);
 
 module.exports = router;

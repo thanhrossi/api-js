@@ -15,5 +15,10 @@ module.exports = {
 		code: 3,
 		message: "review not exist",
 		description: "DES - review not exist"
+	},
+	"notEnoughInfomation": {
+		code: 4,
+		message: "Not enough infomation",
+		description: "DES - Not enough infomation"
 	}
 };
