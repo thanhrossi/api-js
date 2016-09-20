@@ -5,7 +5,7 @@ var errors = require("../errors");
 exports.getListReviews = function (req,res) {
 	Book.findOne({ID: req.params.bookId})
 		.exec(function(err, data){
-			if(err) return res.json(err);
+			if(err) return res.status(500).json(err);
 			if(data){
 				res.json(data.reviews);
 			}else{
@@ -17,7 +17,7 @@ exports.getListReviews = function (req,res) {
 exports.createNewReview = function (req,res) {
 	Book.findOne({ID: req.params.bookId})
 		.exec(function(err, data){
-			if(err) return res.json(err);
+			if(err) return res.status(500).json(err);
 			if(data){
 				var newReview = {
 					author: req.body.author,
@@ -27,7 +27,7 @@ exports.createNewReview = function (req,res) {
 
 				data.reviews.push(newReview);
 				data.save(function(err,book) {
-					if(err) res.json(err);
+					if(err) res.status(500).json(err);
 					res.status(201).json();
 				});
 
@@ -40,7 +40,7 @@ exports.createNewReview = function (req,res) {
 exports.getReview = function (req,res) {
 	Book.findOne({ID: req.params.bookId})
 		.exec(function(err, data){
-			if(err) return res.json(err);
+			if(err) return res.status(500).json(err);
 			if(data){
 				var review = data.reviews.id(req.params.reviewId);
 				if(review) {
@@ -58,7 +58,7 @@ exports.getReview = function (req,res) {
 exports.updateReview = function (req,res) {
 	Book.findOne({ID: req.params.bookId})
 		.exec(function(err, data){
-			if(err) return res.json(err);
+			if(err) return res.status(500).json(err);
 			if(data){
 				var review = data.reviews.id(req.params.reviewId);
 				if(review) {
@@ -67,7 +67,7 @@ exports.updateReview = function (req,res) {
 					review.content = req.body.content || review.content;
 
 					data.save(function(err,book) {
-						if(err) res.json(err);
+						if(err) res.status(500).json(err);
 						res.status(200).json();
 					});
 				}else{
@@ -83,13 +83,13 @@ exports.updateReview = function (req,res) {
 exports.deleteReview = function (req,res) {
 	Book.findOne({ID: req.params.bookId})
 		.exec(function(err, data){
-			if(err) return res.json(err);
+			if(err) return res.status(500).json(err);
 			if(data){
 				var review = data.reviews.id(req.params.reviewId);
 				if(review) {
 					review.remove();
 					data.save(function(err,book) {
-						if(err) res.json(err);
+						if(err) res.status(500).json(err);
 						res.status(200).json();
 					});
 				}else{

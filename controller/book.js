@@ -4,7 +4,7 @@ var bookDB = require("../model/book"),
 
 exports.getListBooks = function (req,res) {
 	Book.find({}, function(err, books) {
-		if(err) return res.json(err);
+		if(err) return res.status(500).json(err);
 		res.json(books);
 	});
 };
@@ -20,7 +20,7 @@ exports.createNewBook = function (req,res) {
 	});
 	
 	newBook.save(function(err){
-		if(err) return res.json(err);
+		if(err) return res.status(500).json(err);
 		res.status(201).json();
 
 	});
@@ -32,7 +32,7 @@ exports.deleteMultiBooks = function (req,res) {
 
 	arrayID.forEach(function(id){
 		Book.findOneAndRemove({ID: id}, function(err){
-			// if (err) return res.json(err);
+			// if (err) return res.status(500).json(err);
 			if(++sentinel === arrayID.length) {
 				res.status(202).json();
 			}
@@ -48,7 +48,7 @@ exports.updateMultiBooks = function (req,res) {
 	arrayID.forEach(function(id){
 		Book.findOne({ID: id}, function(err, data) {
 			if(err) {
-				res.json(err);
+				res.status(500).json(err);
 			}else {
 			    data.Title =  req.body.Title || data.Title,
 			    data.SubTitle = req.body.SubTitle || data.SubTitle,
@@ -56,7 +56,7 @@ exports.updateMultiBooks = function (req,res) {
 			    data.Image = req.body.Image || data.Image
 
 		    	data.save(function(err){
-				if(err) return res.json(err);
+				if(err) return res.status(500).json(err);
 					res.status(202).json();
 				});
 				
@@ -68,7 +68,7 @@ exports.updateMultiBooks = function (req,res) {
 exports.updateBook = function (req,res) {
 	Book.findOne({ID: req.params.id}, function(err, data) {
 		if(err) {
-			res.json(err);
+			res.status(500).json(err);
 		}else{
 			data.ID = req.body.ID || data.ID ,
 		    data.Title =  req.body.Title || data.Title,
@@ -77,7 +77,7 @@ exports.updateBook = function (req,res) {
 		    data.Image = req.body.Image || data.Image,
 		    data.isbn = req.body.isbn || data.isbn
 			data.save(function(err){
-				if(err) return res.json(err);
+				if(err) return res.status(500).json(err);
 				res.status(202).json();
 			});
 		}
@@ -96,7 +96,7 @@ exports.updateBook = function (req,res) {
 
 exports.deleteBook = function (req,res) {
 	Book.findOneAndRemove({ID: req.params.id}, function(err) {
-		if(err) return res.json(err);
+		if(err) return res.status(500).json(err);
 		res.status(202).json();
 	})
 };
@@ -112,7 +112,7 @@ exports.getBook = function (req,res) {
 		.select(queryString)
 		.exec(function(err, data) {
 			if(err) {
-				res.json(err);
+				res.status(500).json(err);
 			}else{
 				var reviews = data.reviews;
 				
@@ -127,7 +127,7 @@ exports.getBook = function (req,res) {
 					data.ratingAvg = avgVal;
 
 					data.save(function(err,book) {
-						if(err) res.json(err);
+						if(err) res.status(500).json(err);
 						res.status(200).json();
 					});
 					

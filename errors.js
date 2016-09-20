@@ -20,5 +20,10 @@ module.exports = {
 		code: 4,
 		message: "Not enough infomation",
 		description: "DES - Not enough infomation"
+	},
+	"manyRequest": {
+		code: 5,
+		message: "So many request",
+		description: "DES - So many request"
 	}
 };

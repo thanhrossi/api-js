@@ -13,7 +13,10 @@ var express  = require("express"),
 mongoose.connect(connString);
 global.Book = require("./model/book"),
 global.User = require("./model/user");
+global.Bucket = require("./model/bucket");
+
 require("./passport");
+var limitRate = require("./middleware/limitRate");
 
 mongoose.connection.on("connected", function(){
 	console.log("connected mongodb");
